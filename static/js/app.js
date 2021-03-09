@@ -1,136 +1,196 @@
-
-let data = d3.json("data/samples.json").then(data => {
-    console.log(data)
-    let samples = data.samples;
-    let metadata = data.metada;
-    console.log(samples)
-    console.log(metadata)
-
-})
-
-function unpack(rows, index) {
-    return rows.map(function (row) {
-        return row[index];
+function demographic(id) {
+    let data = d3.json("data/samples.json").then(data => {
+        const metadata = data.metadata;
+        let demoPanel = d3.select('#sample-metadata')
+        demoPanel.html('');
+        let filteredData = metadata.filter(sampleName => sampleName.id == id)[0]
+        Object.entries(filteredData).forEach(([key, value]) => {
+            demoPanel.append("h6").text(`${key.toUpperCase()}: ${value}`);
+        });
     });
 }
 
-function updatePlotly(newdata) {
-    Plotly.restyle("pie", "values", [newdata]);
+function optionChanged(userChoice) {
+    demographic(userChoice)
+    BuildCharts(userChoice)
 }
-// Horizontal Chart
-function horizontalChart() {
-    let data = [
-        {
-            y: ['giraffes', 'orangutans', 'monkeys'],//otu_ids top10
-            x: [20, 14, 23], //samples_values top10
-            text: ['animal', 'hello', 'yogurt'], //out_labels  top10
-            type: 'bar',
-            orientation: 'h',
-            width: 0.5
-        },
-    ];
-    let layout = {
-        title: 'test',
-        
-        showlegend: false,
-        xaxis: {
-            tickangle: 0,
-            zeroline: true,
-            title: "Sample Value",
-        },
-        yaxis: {
-            zeroline: true,
-            gridwidth: 1,
-            title: "OTU ID" 
-        },
-        bargap: 0.05,
-        height: 800,
-        width: 1150,
-        margin: { t: 100, l: 100 },
-        barmode: 'stack',
-        
-    };
-    Plotly.newPlot('bar', data, layout);
-}
+// function handleChange(event) {
+//     let chosenOption = event.target.value
+//     switch (chosenOption) {
+//         case optionChanged(this.value):
+//             updatePlotly(optionChanged);
+//             break;
+//     }
+// }
 
-    // Plotly.newPlot('bar', data, layout);
-    // let barTrace = [
-    //     {
-    //         y: [1, 2, 3],//otu_ids top10
-    //         x: [1, 2, 3],//samples_values top10 
-    //         text: [1, 2, 3],//out_labels  top10
-    //         type: "bar",
-    //         orientation: "h",
-    //     }
-    // ];
-    // let barLayout = {
-    //     title: "Top 10 Bacteria Cultures Found",
-    //     width: 800,
-    //     height: 300,
-    //     margin: { t: 100, l: 100 },
-    //     barmode: 'stack',
-    //     xaxis: { title: "Sample Value" },
-    // };
 
-    // Plotly.newPlot("bar", [barTrace], barLayout);
-//}
-horizontalChart()
 
-// Function Bubble chart
-// https://plotly.com/javascript/bubble-charts/
-function bubbleChart() {
-    var trace1 = {
-        x: [1, 2, 3, 4], //sample_value
-        y: [10, 11, 12, 13], // OTU_ID
-        text: ['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
-        mode: 'markers',
-        marker: {
-            color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-            size: [40, 60, 80, 100] //size = sample value
+function BuildCharts(sampleId) {
+    let data = d3.json("data/samples.json").then(data => {
+        const samples = data.samples;
+        const metadata = data.metadata;
+
+        //samples_values
+        let filteredSample = samples.filter(sampleName => sampleName.id == sampleId)[0]
+        let filteredMetaSample = metadata.filter(sampleName => sampleName.id == sampleId)[0]
+        let otu_ids = filteredSample.otu_ids
+        let otu_labels = filteredSample.otu_labels
+        let samples_values = filteredSample.sample_values
+        let wfreq = parseInt(filteredMetaSample.wfreq)
+
+        console.log(otu_ids)
+        console.log(otu_labels)
+        console.log(samples_values)
+        console.log(wfreq)
+
+        function unpack(rows, index) {
+            return rows.map(function (row) {
+                return row[index];
+            });
         }
-    };
 
-    var data = [trace1];
+        function updatePlotly(newdata) {
+            Plotly.restyle("pie", "values", [newdata]);
+        }
+        // Horizontal Chart
+        function horizontalChart(dataID) {
+            let yticksBar = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse()
+            let data = [
+                {   
+                    y: yticksBar,//otu_ids top10
+                    x: samples_values.slice(0,10).reverse(),
+                    text: otu_labels.slice(0,10).reverse(), //out_labels  top10
+                    type: 'bar',
+                    orientation: 'h',
+                    width: 0.6,
+                    marker: { color: '(55, 83, 109)' }
+                },
+            ];
+            let layout = {
+                title: 'Top 10 OTU',
 
-    var layout = {
-        title: 'Bubble Chart Hover Text',
-        showlegend: false,
-        height: 600,
-        width: 900,
-        margin: { t: 100, l: 100 },
-        showlegend: false,
-        xaxis: {
-            tickangle: 0,
-            zeroline: true,
-            title: "OTU ID"
-        },
-        yaxis: {
-            zeroline: true,
-            gridwidth: 1,
-            title: "Sample Value",
-        },
-    };
+                showlegend: false,
+                xaxis: {
+                    tickangle: 0,
+                    zeroline: true,
+                    title: "Sample Value",
+                },
+                yaxis: {
+                    zeroline: true,
+                    gridwidth: 1,
+                    title: "OTU ID"
+                },
+                //bargap: 0.01,
+                height: 370,
+                width: 750,
+                margin: { t: 100, l: 100 },
+                barmode: 'stack',
+                paper_bgcolor: "lavender",
+
+            };
+            Plotly.newPlot('bar', data, layout);
+        }
+
+        // Function Bubble chart
+        // https://plotly.com/javascript/bubble-charts/
+        function bubbleChart(dataID) {
+            let xticksBubble = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse()
+            var trace1 = {
+                x: xticksBubble, //otu_id
+                y: samples_values.slice(0,10).reverse(), // sample_values
+                text: otu_labels.slice(0,10).reverse(), // otu_labels
+                mode: 'markers',
+                marker: {
+                    // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                    size: samples_values.slice(0,10).reverse() //size = sample value
+                }
+            };
+
+            let dataBubble = [trace1];
+
+            var layout = {
+                title: 'Bubble Chart Hover Text',
+                showlegend: false,
+                height: 500,
+                width: 1000,
+                margin: { t: 100, l: 100 },
+                showlegend: false,
+                xaxis: {
+                    tickangle: 0,
+                    zeroline: false,
+                    title: "OTU ID"
+                },
+                yaxis: {
+                    zeroline: false,
+                    gridwidth: 1,
+                    title: "Sample Value",
+                },
+                paper_bgcolor: "lavender",
+            };
+            console.log(data)
+            Plotly.newPlot('bubble', dataBubble, layout);
+        }
+
+        function gauge(dataID) {
+            var data = [
+                {
+                    domain: { x: [0, 1], y: [0, 1] },
+                    value: wfreq, //Washing frequency
+                    title: { text: "Washing frequency" },
+                    type: "indicator",
+
+                    mode: "gauge+number+delta",
+                    delta: { reference: 4, increasing: { color: 'green' } },
+                    gauge: {
+                        axis: { range: [0, 9], tickwidth: 1, tickcolor: "darkblue" },
+                        bar:{color: 'blue'},
+                        steps: [
+                            { range: [0, 4], color: "red" },
+                            { range: [4, 9], color: "green" }
+                        ],
+                        threshold: {
+                            line: { color: "grey", width: 4 },
+                            thickness: 1,
+                            value: 4
+                        }
+                    },
+                    bgcolor: "lavender",
+                }
+            ];
+            var layout = {
+                width: 200,
+                height: 300,
+                margin: { t: 25, r: 25, l: 25, b: 25 },
+                paper_bgcolor: "lavender",
+                font: { color: "darkblue", family: "Arial" }
+            };
+
+            // var layout = { width: 400, height: 600, margin: { t: 0, b: 0 } };
+            Plotly.newPlot('gauge', data, layout);
+        }
+        horizontalChart(sampleId)
+        bubbleChart(sampleId)
+        gauge(sampleId)
+    })
+}
+
+let data = d3.json("data/samples.json").then(data => {
     console.log(data)
-    Plotly.newPlot('bubble', data, layout);
-}
+    const samples = data.samples;
+    const metadata = data.metadata;
+    const names = data.names;
+    console.log(samples)
+    console.log(metadata)
 
-bubbleChart()
+    // dropDown button
+    let dropDown = d3.select('#selDataset')
+    // dropDown.on('change', handleChange)
+    names.forEach(name => {
+        dropDown.append('option').text(name).property('value', name);
+    });
+    demographic('940');
+    BuildCharts('940')
+})
 
-// Demographic info on #sample-metadata
 
-
-
-// dropDown button
-
-let dropDown = d3.select('#selDataset')
-dropDown.on('change', handleChange)
-
-function handleChange(event) {
-    let chosenOption = event.target.value
-    switch (chosenOption) {
-        case optionChanged(this.value):
-            updatePlotly(optionChanged);
-            break;
-    }
-}
 
