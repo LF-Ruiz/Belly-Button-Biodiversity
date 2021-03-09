@@ -83,7 +83,7 @@ function BuildCharts(sampleId) {
                 //bargap: 0.01,
                 height: 370,
                 width: 750,
-                margin: { t: 100, l: 100 },
+                margin: { t:40 , l: 90, b: 35, r: 20 },
                 barmode: 'stack',
                 paper_bgcolor: "lavender",
 
@@ -109,11 +109,11 @@ function BuildCharts(sampleId) {
             let dataBubble = [trace1];
 
             var layout = {
-                title: 'Bubble Chart Hover Text',
+                title: 'Top 10 OTU',
                 showlegend: false,
-                height: 500,
-                width: 1000,
-                margin: { t: 100, l: 100 },
+                height: 600,
+                width: 1150,
+                margin: { t:40 , l: 70, b: 35, r: 20 },
                 showlegend: false,
                 xaxis: {
                     tickangle: 0,
@@ -128,7 +128,7 @@ function BuildCharts(sampleId) {
                 paper_bgcolor: "lavender",
             };
             console.log(data)
-            Plotly.newPlot('bubble', dataBubble, layout);
+            Plotly.newPlot('bubble', dataBubble, layout, {scrollZoom: true});
         }
 
         function gauge(dataID) {
@@ -159,7 +159,7 @@ function BuildCharts(sampleId) {
             ];
             var layout = {
                 width: 200,
-                height: 300,
+                height: 370,
                 margin: { t: 25, r: 25, l: 25, b: 25 },
                 paper_bgcolor: "lavender",
                 font: { color: "darkblue", family: "Arial" }
