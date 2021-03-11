@@ -4,7 +4,7 @@
  In this assignment, you will build an interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels.
 
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
-
+#
 ## Summary
 
 1. Use the D3 library to read in `samples.json`.
@@ -20,11 +20,12 @@ The dataset reveals that a small handful of microbial species (also called opera
 4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
+
 ![Demographic Info](images\DemographicInfo.JPG)
 
 6. Update all of the plots any time that a new sample is selected.
 
-Visti [Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
+    * Visit [Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
 
 ## Advanced Challenge Assignment (Optional)
 
@@ -33,4 +34,5 @@ Visti [Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge
 
  ### Solutions
 [Code: GitHub Repository](https://github.com/LF-Ruiz/plotly-challenge)
+
 [Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
