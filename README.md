@@ -1,10 +1,9 @@
 # plotly-challenge
  This repos contains the assingment for  the Interactive Visualizations and Dashboards module.
 
- ###
- ### Solutions
-[Code: GitHub Repository](https://github.com/LF-Ruiz/plotly-challenge)
-[Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
+ In this assignment, you will build an interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels.
+
+The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
 ## Summary
 
@@ -27,3 +26,11 @@
 
 Visti [Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
 
+## Advanced Challenge Assignment (Optional)
+
+![Gauge Chart](images\GaugeChart.JPG)
+
+
+ ### Solutions
+[Code: GitHub Repository](https://github.com/LF-Ruiz/plotly-challenge)
+[Deployed Page at GitHub Pages](https://lf-ruiz.github.io/plotly-challenge/)
