@@ -14,14 +14,7 @@ function optionChanged(userChoice) {
     demographic(userChoice)
     BuildCharts(userChoice)
 }
-// function handleChange(event) {
-//     let chosenOption = event.target.value
-//     switch (chosenOption) {
-//         case optionChanged(this.value):
-//             updatePlotly(optionChanged);
-//             break;
-//     }
-// }
+
 
 
 
@@ -31,7 +24,7 @@ function BuildCharts(sampleId) {
         const metadata = data.metadata;
 
         //samples_values
-        let filteredSample = samples.filter(sampleName => sampleName.id == sampleId)[0]
+        let filteredSample = samples.filter(sampleName => sampleName.id == sampleId)[0] // Arrow function to extract the data
         let filteredMetaSample = metadata.filter(sampleName => sampleName.id == sampleId)[0]
         let otu_ids = filteredSample.otu_ids
         let otu_labels = filteredSample.otu_labels
@@ -130,7 +123,7 @@ function BuildCharts(sampleId) {
             console.log(data)
             Plotly.newPlot('bubble', dataBubble, layout, {scrollZoom: true});
         }
-
+        // Gauge Chart https://plotly.com/javascript/gauge-charts/
         function gauge(dataID) {
             var data = [
                 {
@@ -165,7 +158,7 @@ function BuildCharts(sampleId) {
                 font: { color: "darkblue", family: "Arial" }
             };
 
-            // var layout = { width: 400, height: 600, margin: { t: 0, b: 0 } };
+            
             Plotly.newPlot('gauge', data, layout);
         }
         horizontalChart(sampleId)
