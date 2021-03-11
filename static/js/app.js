@@ -151,7 +151,7 @@ function BuildCharts(sampleId) {
                         threshold: {
                             line: { color: "grey", width: 4 },
                             thickness: 1,
-                            value: 4
+                            value: 9
                         }
                     },
                     bgcolor: "lavender",
