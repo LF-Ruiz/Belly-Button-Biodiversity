@@ -15,13 +15,13 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 3. Create a bubble chart that displays each sample.
 
-![Bubble Chart](.\images\BubbleChart.JPG)
+![Bubble Chart](/images/BubbleChart.JPG)
 
 4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 
-![Demographic Info](.\images\DemographicInfo.JPG)
+![Demographic Info](/images/DemographicInfo.JPG)
 
 6. Update all of the plots any time that a new sample is selected.
 
@@ -29,7 +29,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 ## Advanced Challenge Assignment (Optional)
 
-![Gauge Chart](.\images\GaugeChart.JPG)
+![Gauge Chart](/images/GaugeChart.JPG)
 
 
  ### Solutions
